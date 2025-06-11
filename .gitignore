@@ -2,3 +2,4 @@
 test_audio
 venv/
 __pycache__/
+.env

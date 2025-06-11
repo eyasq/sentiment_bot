@@ -2,3 +2,4 @@ openai-whisper @ git+https://github.com/openai/whisper.git@dd985ac4b90cafeef8712
 google-genai>=1.19.0
 streamlit>=1.45.1
 torch>=2.7.1
+dotenv
