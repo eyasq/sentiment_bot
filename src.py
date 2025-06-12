@@ -4,7 +4,6 @@ import whisper
 from dotenv import load_dotenv
 import google.generativeai as genai
 from prompt import CALL_ANALYSIS_PROMPT
-import streamlit
 model = whisper.load_model("turbo")
 result=model.transcribe("test_audio/jawwal3.mp3", language="ar")
 load_dotenv()
