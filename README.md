@@ -57,3 +57,6 @@ python3 -c "import whisper; whisper.load_model('turbo')"
 # Then run the app
 streamlit run app.py
 ```
+
+### Main Page:
+![https://files.catbox.moe/sdcvav.png](app.py)
