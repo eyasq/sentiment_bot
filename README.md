@@ -59,4 +59,4 @@ streamlit run app.py
 ```
 
 ### Main Page:
-![https://files.catbox.moe/sdcvav.png](app.py)
+![Main Page Screenshot](https://files.catbox.moe/sdcvav.png)
