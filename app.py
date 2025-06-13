@@ -6,9 +6,9 @@ import google.generativeai as genai
 import streamlit as st
 from prompt import CALL_ANALYSIS_PROMPT
 from reps_data import reps_data
-
+import random
 # Page config
-st.set_page_config(page_title="Call Center Dashboard", page_icon="📞", layout="wide")
+st.set_page_config(page_title="Call Center Dashboard", page_icon="📞")
 
 # Load environment variables
 load_dotenv()
@@ -398,7 +398,7 @@ elif page == "Reps Overview":
     with col2:
         st.metric("Total Calls", total_calls)
     with col3:
-        st.metric("Avg Sentiment", f"{avg_sentiment:.1f}")
+        st.metric("Avg Resolution", f"{avg_sentiment:.1f}")
     with col4:
         st.metric("Escalations", total_escalations)
 
@@ -416,30 +416,50 @@ elif page == "Reps Overview":
     for i, rep in enumerate(sorted_reps):
         with st.container():
             col1, col2 = st.columns([3, 1])
-            
+
             with col1:
                 sentiment_color = get_sentiment_color(rep['sentiment_score'])
                 st.markdown(f"### {rep['name']}")
-                
+
                 # Progress bar for sentiment
                 st.progress(rep['sentiment_score'] / 100)
-                
+
                 # Metrics in columns
                 metric_col1, metric_col2, metric_col3 = st.columns(3)
                 with metric_col1:
-                    st.markdown(f"**Sentiment:** {rep['sentiment_score']}/100")
+                    st.markdown(f"**Resolution:** {rep['sentiment_score']}/100")
                 with metric_col2:
                     st.markdown(f"**Calls:** {len(rep['calls'])}")
                 with metric_col3:
                     st.markdown(f"**Escalations:** {rep['escalations']}")
-            
+
+                # Example churn rate (replace with real logic if available)
+                churn_rate = random.choice([3, 5, 13, 12, 15]) if rep["name"] == "Liam Novak" else random.randint(1, 10)
+
+                # Churn color coding
+                if churn_rate >= 12:
+                    churn_color = "red"
+                    st.markdown(f"<div style='color:red;font-weight:bold;'>⚠️ Flagged for Review</div>", unsafe_allow_html=True)
+                elif churn_rate >= 5:
+                    churn_color = "orange"
+                else:
+                    churn_color = "green"
+
+                st.markdown(
+                    f"<div style='margin-top:8px;'>"
+                    f"<strong>Churn Rate (month):</strong> "
+                    f"<span style='color:{churn_color}; font-weight:bold;'>{churn_rate}%</span>"
+                    f"</div>",
+                    unsafe_allow_html=True
+                )
+
             with col2:
                 if st.button(f"👤 View Profile", key=f"view_{rep['id']}", type="secondary"):
                     st.session_state.selected_rep_id = rep['id']
                     st.query_params.update(rep_id=rep['id'])
                     st.rerun()
-        
-        if i < len(sorted_reps) - 1:  # Don't add separator after last item
+
+        if i < len(sorted_reps) - 1:
             st.divider()
 
 # Rep Profiles tab
