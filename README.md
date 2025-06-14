@@ -35,6 +35,7 @@ touch .env
 ```
 
 Add your API key to the `.env` file:
+You can obtain a google API key though: [Google AI Studio](https://aistudio.google.com/prompts/new_chat)
 
 ```
 GEMINI_API_KEY=your_api_key_here
